@@ -20,7 +20,8 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Get Updates
+      - name: Run bot
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-        run: python get_updates.py
+          CHANNEL_LINK: ${{ secrets.CHANNEL_LINK }}
+        run: python bot.py
