@@ -1,0 +1,29 @@
+name: ارسال پست گیاهی هر ساعت
+
+on:
+  schedule:
+    # هر ساعت یک بار (UTC)
+    - cron: '0 * * * *'
+  workflow_dispatch:  # امکان اجرای دستی
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run bot
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
+          CHANNEL_LINK: ${{ secrets.CHANNEL_LINK }}
+        run: python bot.py
