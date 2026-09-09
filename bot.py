@@ -5,7 +5,6 @@ from datetime import datetime
 from zoneinfo import ZoneInfo
 
 TOKEN = os.getenv("BOT_TOKEN")
-# آیدی درست کانال که از getUpdates پیدا شد
 CHAT_ID = "c0Cr7CY010ddee1b54438f20491db663"
 CHANNEL_LINK = os.getenv("CHANNEL_LINK", "https://rubika.ir/giahanedaroi")
 
@@ -25,7 +24,10 @@ POSTS = [
 ]
 
 def is_within_posting_hours():
-    return True  # موقتاً برای تست
+    """فقط بین ۸ صبح تا ۲۳ شب به وقت تهران پست بفرست"""
+    tehran = ZoneInfo("Asia/Tehran")
+    now = datetime.now(tehran)
+    return 8 <= now.hour <= 23
 
 def send_message(text: str):
     url = f"https://botapi.rubika.ir/v3/{TOKEN}/sendMessage"
@@ -41,8 +43,12 @@ def main():
         print("❌ BOT_TOKEN تنظیم نشده است.")
         return
 
-    post = "سلام، این یک پیام تستی از ربات گیاهان دارویی است. اگر این پیام را می‌بینید یعنی ربات درست کار می‌کند."
-    print(f"در حال ارسال پست تستی...\n{post}")
+    if not is_within_posting_hours():
+        print("⏰ خارج از ساعت ارسال (۸ صبح تا ۲۳). پیام ارسال نشد.")
+        return
+
+    post = random.choice(POSTS)
+    print(f"در حال ارسال پست...\n{post[:80]}...")
     
     result = send_message(post)
     print("نتیجه API:", result)
