@@ -2,9 +2,8 @@ name: ارسال پست گیاهی هر ساعت
 
 on:
   schedule:
-    # هر ساعت یک بار (UTC)
     - cron: '0 * * * *'
-  workflow_dispatch:  # امکان اجرای دستی
+  workflow_dispatch:
 
 jobs:
   post:
@@ -21,9 +20,7 @@ jobs:
       - name: Install dependencies
         run: pip install requests
 
-      - name: Run bot
+      - name: Get Updates
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          CHAT_ID: ${{ secrets.CHAT_ID }}
-          CHANNEL_LINK: ${{ secrets.CHANNEL_LINK }}
-        run: python bot.py
+        run: python get_updates.py
