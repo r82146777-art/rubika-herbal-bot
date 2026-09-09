@@ -38,9 +38,11 @@ POSTS = [
 
 def is_within_posting_hours():
     """بررسی اینکه الان بین ۸ صبح تا ۲۳ شب به وقت تهران هستیم یا نه"""
-    tehran = ZoneInfo("Asia/Tehran")
-    now = datetime.now(tehran)
-    return 8 <= now.hour <= 23
+    # موقتاً برای تست همیشه True برمی‌گرداند
+    return True
+    # tehran = ZoneInfo("Asia/Tehran")
+    # now = datetime.now(tehran)
+    # return 8 <= now.hour <= 23
 
 def send_message(text: str):
     url = f"https://botapi.rubika.ir/v3/{TOKEN}/sendMessage"
