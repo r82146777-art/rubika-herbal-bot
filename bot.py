@@ -40,9 +40,6 @@ def is_within_posting_hours():
     """بررسی اینکه الان بین ۸ صبح تا ۲۳ شب به وقت تهران هستیم یا نه"""
     # موقتاً برای تست همیشه True برمی‌گرداند
     return True
-    # tehran = ZoneInfo("Asia/Tehran")
-    # now = datetime.now(tehran)
-    # return 8 <= now.hour <= 23
 
 def send_message(text: str):
     url = f"https://botapi.rubika.ir/v3/{TOKEN}/sendMessage"
@@ -58,12 +55,9 @@ def main():
         print("❌ BOT_TOKEN یا CHAT_ID تنظیم نشده است.")
         return
 
-    if not is_within_posting_hours():
-        print("⏰ خارج از ساعت ارسال (۸ صبح تا ۲۳). پیام ارسال نشد.")
-        return
-
-    post = random.choice(POSTS)
-    print(f"در حال ارسال پست...\n{post[:100]}...")
+    # پیام تست خیلی ساده
+    post = "سلام، این یک پیام تستی از ربات گیاهان دارویی است. اگر این پیام را می‌بینید یعنی ربات درست کار می‌کند."
+    print(f"در حال ارسال پست تستی...\n{post}")
     
     result = send_message(post)
     print("نتیجه API:", result)
